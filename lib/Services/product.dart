@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:baazaru/Utils/config.dart';
+import 'package:baazaru/Helpers/config.dart';
 import 'package:baazaru/Models/product.dart';
 
 class ProductService {
@@ -19,8 +19,7 @@ class ProductService {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      return List<Product>();
-      // throw Exception('Failed to load album');
+      throw Exception('Failed to load album');
     }
   }
 }

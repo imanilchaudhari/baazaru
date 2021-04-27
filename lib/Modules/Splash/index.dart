@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:baazaru/Constants/constants.dart';
+import 'package:baazaru/cons.dart';
 
-class IndexPage extends StatefulWidget {
+class SplashPage extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();
 }
 
-class SplashScreenState extends State<IndexPage>
+class SplashScreenState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   var _visible = true;
 

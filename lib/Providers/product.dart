@@ -16,4 +16,9 @@ class ProductProvider extends ChangeNotifier {
     productList = await ProductService.getAll();
     return productList;
   }
+
+  Future<List<Product>> getTrendingProducts() async {
+    productList = await ProductService.getAll();
+    return productList;
+  }
 }

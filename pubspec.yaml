@@ -26,6 +26,7 @@ dependencies:
   http: any
   toast: any
   provider: any
+  flutter_svg: ^0.19.1
 
 dev_dependencies:
   flutter_test:
@@ -45,25 +46,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/house.png
-    - assets/images/sofa.png
-    - assets/images/gadget.png
-    - assets/images/bike.png
-    - assets/images/pet.png
-    - assets/images/car.png
-    - assets/images/smartphone.png
-    - assets/images/job.png
-    - assets/images/powered_by.png
-    - assets/images/logo.png
-    - assets/images/laptop.png
-    - assets/images/lenovot450.jpg
-    - assets/images/samsuns9+.jpg
-    - assets/images/bike.jpg
-    - assets/images/sofa.jpg
-    - assets/images/canon.jpg
-    - assets/images/sofa.png
-    - assets/images/dress.png
-    - assets/images/menubutton.png
+    - assets/images/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

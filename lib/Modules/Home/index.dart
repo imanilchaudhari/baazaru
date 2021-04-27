@@ -1,9 +1,14 @@
-import 'package:baazaru/Constants/constants.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:baazaru/Helpers/config.dart';
+import 'package:baazaru/cons.dart';
 import 'package:baazaru/Models/category.dart';
 import 'package:baazaru/Models/product.dart';
+import 'package:baazaru/Providers/product.dart';
 import 'package:baazaru/Services/product.dart';
 import 'package:baazaru/Widgets/custom_shape.dart';
 import 'package:baazaru/Widgets/custom_card.dart';
@@ -22,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<Product> trendingListItems;
   double _height;
   double _width;
+  List<Product> items;
   @override
   void initState() {
     // TODO: implement initState
@@ -37,6 +43,12 @@ class _HomePageState extends State<HomePage> {
         price: "40000",
       ),
     ];
+
+    // items = Provider.of<ProductProvider>(context);
+    // items.getTrendingProducts();
+    // trendingListItems = getProducts();
+
+    print(trendingListItems);
 
 //    categoryItems = [
 //      Category("Electronics", "assets/images/gadget.png"),
@@ -175,6 +187,9 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.login),
             title: Text("Login"),
+            onTap: () {
+              Navigator.pushNamed(context, LOGIN_PAGE);
+            },
           ),
         ],
       ),
@@ -810,5 +825,20 @@ class _HomePageState extends State<HomePage> {
         location: "Sector 62, Noida",
       ),
     );
+  }
+
+  Future<List<Product>> getProducts() async {
+    final response = await http.get(Uri.https(Config.url, ProductService.path));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      final data = jsonDecode(response.body);
+      // print(data);
+      // return data;
+      return List<Product>.from(data.map((e) => Product.fromJson(e)));
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 }
