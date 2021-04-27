@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baazaru/Constants/constants.dart';
 
-class AnimatedSplashScreen extends StatefulWidget {
+class IndexPage extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();
 }
 
-class SplashScreenState extends State<AnimatedSplashScreen>
+class SplashScreenState extends State<IndexPage>
     with SingleTickerProviderStateMixin {
   var _visible = true;
 
@@ -22,7 +22,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed(MAIN_UI);
+    Navigator.of(context).pushReplacementNamed(HOME_PAGE);
   }
 
   @override
@@ -31,7 +31,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
     animationController = new AnimationController(
         vsync: this, duration: new Duration(seconds: 2));
     animation =
-    new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
+        new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
 
     animation.addListener(() => this.setState(() {}));
     animationController.forward();
@@ -52,11 +52,15 @@ class SplashScreenState extends State<AnimatedSplashScreen>
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-
-              Padding(padding: EdgeInsets.only(bottom: 30.0),child:new Image.asset('assets/images/powered_by.png',height: 25.0,fit: BoxFit.scaleDown,))
-
-
-            ],),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  child: new Image.asset(
+                    'assets/images/powered_by.png',
+                    height: 25.0,
+                    fit: BoxFit.scaleDown,
+                  ))
+            ],
+          ),
           new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

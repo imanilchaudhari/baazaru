@@ -1,3 +1,3 @@
-
-final String MAIN_UI = "main_ui";
-final String SPLASH_SCREEN = "splash_screen";
+final String HOME_PAGE = "home_page";
+final String INDEX_PAGE = "index_page";
+final String TRENDING_PAGE = "trending";

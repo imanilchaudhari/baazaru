@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:baazaru/Constants/constants.dart';
-import 'package:baazaru/UI/Widgets/splash_screen.dart';
-import 'package:baazaru/UI/main_ui.dart';
+import 'package:baazaru/Providers/product.dart';
+import 'package:baazaru/Pages/index.dart';
+import 'package:baazaru/Pages/home.dart';
+import 'package:baazaru/Pages/trending.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,18 +18,33 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
 
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Classified App Clone',
-      theme: ThemeData(primaryColor: Colors.orange[200]),
-      routes: <String, WidgetBuilder>{
-        MAIN_UI: (BuildContext context) => MainUI(),
-        SPLASH_SCREEN: (BuildContext context) => AnimatedSplashScreen(),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: true,
+          title: 'Flutter Classified App Clone',
+          theme: ThemeData(primaryColor: Colors.orange[200]),
+          routes: <String, WidgetBuilder>{
+            HOME_PAGE: (BuildContext context) => HomePage(),
+            INDEX_PAGE: (BuildContext context) => IndexPage(),
+            TRENDING_PAGE: (BuildContext context) => TrendingPage(),
+          },
+          initialRoute: HOME_PAGE,
+        ));
 
-
-      },
-      initialRoute: SPLASH_SCREEN,
-    );
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: true,
+    //   title: 'Flutter Classified App Clone',
+    //   theme: ThemeData(primaryColor: Colors.orange[200]),
+    //   routes: <String, WidgetBuilder>{
+    //     HOME_PAGE: (BuildContext context) => HomePage(),
+    //     INDEX_PAGE: (BuildContext context) => IndexPage(),
+    //     TRENDING_PAGE: (BuildContext context) => TrendingPage(),
+    //   },
+    //   initialRoute: TRENDING_PAGE,
+    // );
   }
 }
