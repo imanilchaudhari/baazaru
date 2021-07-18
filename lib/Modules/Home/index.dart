@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:baazaru/Helpers/config.dart';
+import 'package:baazaru/conf.dart';
 import 'package:baazaru/cons.dart';
 import 'package:baazaru/Models/category.dart';
 import 'package:baazaru/Models/product.dart';

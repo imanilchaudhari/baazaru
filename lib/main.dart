@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: true,
-          title: 'Flutter Classified App Clone',
+          title: 'Welcome to Baazaru',
           theme: ThemeData(primaryColor: Colors.orange[200]),
           routes: <String, WidgetBuilder>{
             SPLASH_PAGE: (BuildContext context) => SplashPage(),
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
     // return MaterialApp(
     //   debugShowCheckedModeBanner: true,
-    //   title: 'Flutter Classified App Clone',
+    //   title: 'Welcome to Baazaru',
     //   theme: ThemeData(primaryColor: Colors.orange[200]),
     //   routes: <String, WidgetBuilder>{
     //     HOME_PAGE: (BuildContext context) => HomePage(),
