@@ -1,18 +1,18 @@
-# Flutter Classified App Demo
+# Baazaru
 
-A sample app to showcase classified app using flutter. 
+Nepal's online classified where you can buy, sell anything you want.
 
 # Demo
-<img height="480px" width="270px" src="https://github.com/imanilchaudhari/baazaru/blob/master/assets/screens/demo.gif">
+<img height="480px" width="270px" src="https://github.com/imanilchaudhari/app.baazaru.com/blob/master/assets/screens/demo.gif">
 
 
 
 # Android Screen
-<img height="480px" src="https://github.com/imanilchaudhari/baazaru/blob/master/assets/screens/android.png"> 
+<img height="480px" src="https://github.com/imanilchaudhari/app.baazaru.com/blob/master/assets/screens/android.png"> 
 
 
 # iOS Screen
-<img height="480px" src="https://github.com/imanilchaudhari/baazaru/blob/master/assets/screens/iphone.png">
+<img height="480px" src="https://github.com/imanilchaudhari/app.baazaru.com/blob/master/assets/screens/iphone.png">
 
 
 ## Getting Started
