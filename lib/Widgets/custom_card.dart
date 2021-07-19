@@ -95,24 +95,24 @@ class CustomCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Flexible(
-                          child: GestureDetector(
-                            child: Icon(
-                              Icons.favorite_border,
-                              size: _height / 30,
-                            ),
-                            onTap: () {
-                              print('Fav');
-                            },
-                          ),
-                        ),
+                        // Flexible(
+                        //   child: GestureDetector(
+                        //     child: Icon(
+                        //       Icons.favorite_border,
+                        //       size: _height / 30,
+                        //     ),
+                        //     onTap: () {
+                        //       print('Fav');
+                        //     },
+                        //   ),
+                        // ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              dateAdded,
-                              style: TextStyle(fontSize: _height / 65),
-                            ),
+                            // Text(
+                            //   dateAdded,
+                            //   style: TextStyle(fontSize: _height / 65),
+                            // ),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[

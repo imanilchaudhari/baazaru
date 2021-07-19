@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   bool isExpanded = false;
   List<Category> categoryItems;
-  List<Product> trendingListItems;
+  List<Product> featuredItems;
   double _height;
   double _width;
   List<Product> items;
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
 
-    trendingListItems = [
+    featuredItems = [
       Product(
         id: 123,
         createdAt: DateTime(2019, 10, 10, 10, 10, 10),
@@ -41,14 +41,18 @@ class _HomePageState extends State<HomePage> {
         content:
             "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
         price: "40000",
+        preview: "assets/images/lenovot450.jpg",
+      ),
+      Product(
+        id: 123,
+        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
+        name: "Asus Laptop",
+        content:
+            "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
+        price: "40000",
+        preview: "assets/images/laptop.png",
       ),
     ];
-
-    // items = Provider.of<ProductProvider>(context);
-    // items.getTrendingProducts();
-    // trendingListItems = getProducts();
-
-    print(trendingListItems);
 
 //    categoryItems = [
 //      Category("Electronics", "assets/images/gadget.png"),
@@ -74,16 +78,18 @@ class _HomePageState extends State<HomePage> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: _bottomNavBar(),
+      bottomNavigationBar: _footerWidget(),
       key: scaffoldKey,
-      drawer: _drawer(),
+      drawer: _sidebarWidget(),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 3,
-        onPressed: () {},
-        backgroundColor: Colors.orange[200],
-        icon: Icon(Icons.camera_alt),
+        onPressed: () {
+          Navigator.pushNamed(context, LOGIN_PAGE);
+        },
+        backgroundColor: Colors.deepPurple[200],
+        icon: Icon(Icons.add),
         label: Text(
-          "Post AD",
+          "List An Ads",
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -105,12 +111,12 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                         onTap: _expand,
                         child: Text(
-                          isExpanded ? "Show less" : "Show all",
+                          isExpanded ? "View Less" : "View All",
                           style: TextStyle(
-                            color: Colors.orange[200],
+                            color: Colors.deepPurple[200],
                           ),
                         )),
-                    //IconButton(icon: isExpanded? Icon(Icons.arrow_drop_up, color: Colors.orange[200],) : Icon(Icons.arrow_drop_down, color: Colors.orange[200],), onPressed: _expand)
+                    //IconButton(icon: isExpanded? Icon(Icons.arrow_drop_up, color: Colors.deepPurple[200],) : Icon(Icons.arrow_drop_down, color: Colors.deepPurple[200],), onPressed: _expand)
                   ],
                 ),
               ),
@@ -121,22 +127,23 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("Trending", style: TextStyle(fontSize: 16)),
+                    Text("Featured Ads", style: TextStyle(fontSize: 16)),
                     GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).pushNamed(TRENDING_UI);
+                          // Navigator.of(context).pushNamed(FEATURE_PAGE);
+                          Navigator.pushNamed(context, FEATURE_PAGE);
                           print('Showing all');
                         },
                         child: Text(
-                          'Show all',
+                          'View All',
                           style: TextStyle(
-                            color: Colors.orange[300],
+                            color: Colors.deepPurple[300],
                           ),
                         ))
                   ],
                 ),
               ),
-              trendingProducts(),
+              featuredProducts(),
             ],
           ),
         ),
@@ -144,7 +151,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _drawer() {
+  Widget _sidebarWidget() {
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -155,7 +162,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: _height / 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
                 ),
               ),
               child: ListTile(
@@ -183,6 +190,9 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.contact_page),
             title: Text("Contact"),
+            onTap: () {
+              Navigator.pushNamed(context, CONTACT_PAGE);
+            },
           ),
           ListTile(
             leading: Icon(Icons.login),
@@ -196,7 +206,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _bottomNavBar() {
+  Widget _footerWidget() {
     return BottomAppBar(
       notchMargin: 4,
       shape: AutomaticNotchedShape(RoundedRectangleBorder(),
@@ -213,12 +223,14 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.home),
               onPressed: () {
                 print("Home page");
+                Navigator.of(context).pushNamed(HOME_PAGE);
               },
             ),
             IconButton(
               icon: Icon(Icons.message),
               onPressed: () {
                 print("Contact page");
+                Navigator.of(context).pushNamed(CONTACT_PAGE);
               },
             )
           ],
@@ -238,7 +250,7 @@ class _HomePageState extends State<HomePage> {
               height: _height / 3,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
                 ),
               ),
             ),
@@ -252,7 +264,7 @@ class _HomePageState extends State<HomePage> {
               height: _height / 3.5,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
                 ),
               ),
             ),
@@ -266,7 +278,7 @@ class _HomePageState extends State<HomePage> {
               height: _height / 3,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
                 ),
               ),
             ),
@@ -279,17 +291,21 @@ class _HomePageState extends State<HomePage> {
             elevation: 8,
             child: Container(
               child: TextFormField(
-                cursorColor: Colors.orange[200],
+                cursorColor: Colors.deepPurple[200],
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
-                  prefixIcon:
-                      Icon(Icons.search, color: Colors.orange[200], size: 30),
+                  prefixIcon: Icon(Icons.search,
+                      color: Colors.deepPurple[200], size: 30),
                   hintText: "What're you looking for?",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: BorderSide.none),
                 ),
+                onTap: () {},
+                // onSaved: (String? value) {
+                //   print('Value for field saved as "$value"');
+                // },
               ),
             ),
           ),
@@ -575,7 +591,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(ELECTRONICS_ITEM_LIST);
+                    Navigator.of(context).pushNamed(CATEGORY_PAGE);
                     print('Routing to Electronics item list');
                   },
                   child: Image.asset(
@@ -792,28 +808,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget trendingProducts() {
+  Widget featuredProducts() {
     return Container(
       height: _height / 4.25,
       //width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         padding: EdgeInsets.all(5),
         shrinkWrap: true,
-        itemCount: trendingListItems.length,
+        itemCount: featuredItems.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, index) {
-          return _buildTrendingEntries(context, index, trendingListItems);
+          return _buildFeaturedItems(context, index, featuredItems);
         },
       ),
     );
   }
 
-  Widget _buildTrendingEntries(
+  Widget _buildFeaturedItems(
       BuildContext context, int index, List<Product> listItem) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(TRENDING_PAGE);
-        print("Routing to trending list page");
+        Navigator.of(context).pushNamed(PRODUCT_PAGE);
+        print("Routing to product page");
       },
       child: CustomCard(
         title: '${listItem[index].name}',
@@ -821,8 +837,8 @@ class _HomePageState extends State<HomePage> {
         price: "₹${listItem[index].price}",
         dateAdded: "${listItem[index].createdAt}",
         description: "${listItem[index].content}",
-        image: "assets/images/gadget.png",
-        location: "Sector 62, Noida",
+        image: "${listItem[index].preview}",
+        location: "Kathmandu, Nepal",
       ),
     );
   }
@@ -834,7 +850,7 @@ class _HomePageState extends State<HomePage> {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final data = jsonDecode(response.body);
-      // print(data);
+      print(data);
       // return data;
       return List<Product>.from(data.map((e) => Product.fromJson(e)));
     } else {

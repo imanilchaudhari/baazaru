@@ -38,6 +38,7 @@ class Product {
     this.updatedBy,
     this.createdAt,
     this.updatedAt,
+    this.preview,
     this.images,
   });
 
@@ -77,6 +78,7 @@ class Product {
   int updatedBy;
   DateTime createdAt;
   DateTime updatedAt;
+  String preview;
   Images images;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

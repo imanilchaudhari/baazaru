@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<User>> getTrendingUsers() async {
+  Future<List<User>> getFeaturedUsers() async {
     productList = await UserService.getAll();
     return productList;
   }

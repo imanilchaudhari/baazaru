@@ -8,11 +8,14 @@ import 'package:baazaru/Providers/product.dart';
 import 'package:baazaru/Modules/Splash/index.dart';
 import 'package:baazaru/Modules/Home/index.dart';
 import 'package:baazaru/Modules/Search/index.dart';
-import 'package:baazaru/Modules/Product/trending.dart';
+import 'package:baazaru/Modules/Featured/index.dart';
 import 'package:baazaru/Modules/Login/index.dart';
 import 'package:baazaru/Modules/Forget/index.dart';
 import 'package:baazaru/Modules/Signup/index.dart';
 import 'package:baazaru/Modules/Welcome/index.dart';
+import 'package:baazaru/Modules/Category/index.dart';
+import 'package:baazaru/Modules/Product/index.dart';
+import 'package:baazaru/Modules/Contact/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,11 +39,14 @@ class MyApp extends StatelessWidget {
             SPLASH_PAGE: (BuildContext context) => SplashPage(),
             HOME_PAGE: (BuildContext context) => HomePage(),
             SEARCH_PAGE: (BuildContext context) => SearchPage(),
-            TRENDING_PAGE: (BuildContext context) => TrendingPage(),
+            CONTACT_PAGE: (BuildContext context) => ContactPage(),
+            FEATURE_PAGE: (BuildContext context) => FeaturedPage(),
             LOGIN_PAGE: (BuildContext context) => LoginPage(),
             SIGNUP_PAGE: (BuildContext context) => SignupPage(),
             FORGET_PAGE: (BuildContext context) => ForgetPage(),
             WELCOME_PAGE: (BuildContext context) => WelcomePage(),
+            CATEGORY_PAGE: (BuildContext context) => CategoryPage(),
+            PRODUCT_PAGE: (BuildContext context) => ProductPage(),
           },
           initialRoute: HOME_PAGE,
         ));
@@ -52,9 +58,9 @@ class MyApp extends StatelessWidget {
     //   routes: <String, WidgetBuilder>{
     //     HOME_PAGE: (BuildContext context) => HomePage(),
     //     SPLASH_PAGE: (BuildContext context) => SplashPage(),
-    //     TRENDING_PAGE: (BuildContext context) => TrendingPage(),
+    //     FEATURE_PAGE: (BuildContext context) => FeaturedPage(),
     //   },
-    //   initialRoute: TRENDING_PAGE,
+    //   initialRoute: FEATURE_PAGE,
     // );
   }
 }
