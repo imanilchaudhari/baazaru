@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:baazaru/cons.dart';
-import 'package:baazaru/Widgets/custom_appbar.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage({Key key}) : super(key: key);
@@ -26,7 +25,7 @@ class _ContactPageState extends State<ContactPage> {
       floatingActionButton: FloatingActionButton.extended(
         elevation: 3,
         onPressed: () {
-          Navigator.pushNamed(context, LOGIN_PAGE);
+          Navigator.pushNamed(context, CREATE_PAGE);
         },
         backgroundColor: Colors.deepPurple[200],
         icon: Icon(Icons.add),

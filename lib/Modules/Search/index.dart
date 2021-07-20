@@ -19,6 +19,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Search Products"),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Text('loading'),
     );

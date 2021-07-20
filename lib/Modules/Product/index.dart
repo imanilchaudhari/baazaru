@@ -18,6 +18,7 @@ class ProductlPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Detail Products"),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Text('loading'),
     );

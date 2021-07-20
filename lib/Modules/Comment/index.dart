@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CategoryPage extends StatefulWidget {
-  CategoryPage({Key key}) : super(key: key);
+class CommentPage extends StatefulWidget {
+  CommentPage({Key key}) : super(key: key);
   @override
-  _CategoryPageState createState() => _CategoryPageState();
+  _CommentPageState createState() => _CommentPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CommentPageState extends State<CommentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Category Page"),
+        title: Text("Comment Page"),
         backgroundColor: Colors.deepPurple,
       ),
       body: Text('loading'),

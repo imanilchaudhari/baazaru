@@ -18,3 +18,6 @@ const PRODUCT_PAGE = "product";
 const FEATURE_PAGE = "featured";
 const TRENDING_PAGE = "trending";
 const CATEGORY_PAGE = "category";
+
+const CREATE_PAGE = "create";
+const COMMENT_PAGE = "comment";

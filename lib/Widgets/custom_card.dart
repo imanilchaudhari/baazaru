@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   double _width;
   double _height;
-  double _aspectRatio;
   String title;
   String price;
   String dateAdded;
