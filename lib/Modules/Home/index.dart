@@ -1,16 +1,15 @@
 import 'dart:convert';
+import 'package:baazaru/Modules/Search/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:baazaru/conf.dart';
 import 'package:baazaru/cons.dart';
-import 'package:baazaru/Models/category.dart';
+import 'package:baazaru/Classes/search.dart';
 import 'package:baazaru/Models/product.dart';
-import 'package:baazaru/Providers/product.dart';
 import 'package:baazaru/Services/product.dart';
-import 'package:baazaru/Widgets/custom_shape.dart';
 import 'package:baazaru/Widgets/custom_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,50 +20,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  int _currentIndex = 0;
 
   bool isExpanded = false;
-  List<Category> categoryItems;
-  List<Product> featuredItems;
   double _height;
   double _width;
+
   List<Product> items;
+  Future<List<Product>> products;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    featuredItems = [
-      Product(
-        id: 123,
-        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
-        name: "Lenovo T450",
-        content:
-            "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
-        price: "40000",
-        preview: "assets/images/lenovot450.jpg",
-      ),
-      Product(
-        id: 123,
-        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
-        name: "Asus Laptop",
-        content:
-            "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
-        price: "40000",
-        preview: "assets/images/laptop.png",
-      ),
-    ];
-
-//    categoryItems = [
-//      Category("Electronics", "assets/images/gadget.png"),
-//      Category("Properties", "assets/images/house.png"),
-//      Category("Jobs", "assets/images/job.png"),
-//      Category("Furniture", "assets/images/sofa.png"),
-//      Category("Cars", "assets/images/car.png"),
-//      Category("Bikes", "assets/images/bike.png"),
-//      Category("Mobiles", "assets/images/smartphone.png"),
-//      Category("Pets", "assets/images/pet.png"),
-//      Category("Fashion", "assets/images/dress.png"),
-//    ];
+    products = getProducts();
   }
 
   void _expand() {
@@ -78,76 +46,110 @@ class _HomePageState extends State<HomePage> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: _footerWidget(),
+      appBar: AppBar(
+        title: Text(
+          "BAAZARU",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            scaffoldKey.currentState.openDrawer();
+          },
+          child: Icon(
+            Icons.menu, // add custom icons also
+          ),
+        ),
+        actions: <Widget>[
+          // Padding(
+          //   padding: EdgeInsets.only(right: 20.0),
+          //   child: GestureDetector(
+          //     onTap: () {},
+          //     child: Icon(
+          //       Icons.search,
+          //       size: 26.0,
+          //     ),
+          //   ),
+          // ),
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: Icon(Icons.settings),
+            ),
+          ),
+        ],
+        centerTitle: true,
+      ),
       key: scaffoldKey,
       drawer: _sidebarWidget(),
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 3,
-        onPressed: () {
-          Navigator.pushNamed(context, LOGIN_PAGE);
-        },
-        backgroundColor: Colors.deepPurple[200],
-        icon: Icon(Icons.add),
-        label: Text(
-          "List An Ads",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+      floatingActionButton: SizedBox(
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.indigo,
+          onPressed: () {
+            Navigator.pushNamed(context, CREATE_PAGE);
+          },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Container(
         height: _height,
         width: _width,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              clipShape(),
+              searchBox(),
+              bannerItems(),
               Container(
-                margin: EdgeInsets.only(left: 30, right: 30, top: 20),
+                margin: EdgeInsets.only(left: 10, right: 10, top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Shop for', style: TextStyle(fontSize: 16)),
+                    Text('Browse Categories', style: TextStyle(fontSize: 16)),
                     GestureDetector(
                         onTap: _expand,
                         child: Text(
                           isExpanded ? "View Less" : "View All",
                           style: TextStyle(
-                            color: Colors.deepPurple[200],
+                            color: Colors.indigo[900],
                           ),
                         )),
-                    //IconButton(icon: isExpanded? Icon(Icons.arrow_drop_up, color: Colors.deepPurple[200],) : Icon(Icons.arrow_drop_down, color: Colors.deepPurple[200],), onPressed: _expand)
+                    //IconButton(icon: isExpanded? Icon(Icons.arrow_drop_up, color: Colors.indigo[900],) : Icon(Icons.arrow_drop_down, color: Colors.indigo[900],), onPressed: _expand)
                   ],
                 ),
               ),
-              expandList(),
+              categoryItems(),
               Divider(),
               Container(
-                margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Featured Ads", style: TextStyle(fontSize: 16)),
                     GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).pushNamed(FEATURE_PAGE);
-                          Navigator.pushNamed(context, FEATURE_PAGE);
-                          print('Showing all');
+                          Navigator.of(context).pushNamed(FEATURE_PAGE);
+                          // Navigator.pushNamed(context, FEATURE_PAGE);
                         },
                         child: Text(
                           'View All',
                           style: TextStyle(
-                            color: Colors.deepPurple[300],
+                            color: Colors.indigo[300],
                           ),
                         ))
                   ],
                 ),
               ),
-              featuredProducts(),
+              productItems(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: _footerWidget(),
     );
   }
 
@@ -155,37 +157,61 @@ class _HomePageState extends State<HomePage> {
     return Drawer(
       child: Column(
         children: <Widget>[
-          Opacity(
-            opacity: 0.75,
-            child: Container(
-              height: _height / 6,
-              padding: EdgeInsets.only(top: _height / 20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
-                ),
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
-                    color: Colors.black,
-                  ),
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-                title: Text("Anil Chaudhari"),
-                subtitle: Text(
-                  "imanilchaudhari@gmail.com",
-                  style: TextStyle(fontSize: 13),
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black,
-                ),
+          // Opacity(
+          //   opacity: 0.75,
+          //   child: Container(
+          //     height: _height / 6,
+          //     padding: EdgeInsets.only(top: _height / 20),
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         colors: [Colors.indigo[900], Colors.indigoAccent],
+          //       ),
+          //     ),
+          //     child: ListTile(
+          //       leading: CircleAvatar(
+          //         child: Icon(
+          //           Icons.person,
+          //           size: 40,
+          //           color: Colors.black,
+          //         ),
+          //         radius: 30,
+          //         backgroundColor: Colors.white,
+          //       ),
+          //       title: Text("Anil Chaudhari"),
+          //       subtitle: Text(
+          //         "imanilchaudhari@gmail.com",
+          //         style: TextStyle(fontSize: 13),
+          //       ),
+          //       trailing: Icon(
+          //         Icons.arrow_forward_ios,
+          //         color: Colors.black,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          DrawerHeader(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('images/drawer.png'),
               ),
             ),
+            child: Stack(children: <Widget>[
+              Positioned(
+                bottom: 12.0,
+                left: 16.0,
+                child: Text(
+                  "Welcome To Baazaru",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ]),
           ),
           ListTile(
             leading: Icon(Icons.contact_page),
@@ -194,11 +220,31 @@ class _HomePageState extends State<HomePage> {
               Navigator.pushNamed(context, CONTACT_PAGE);
             },
           ),
+          Visibility(
+            visible: true,
+            child: ListTile(
+              leading: Icon(Icons.login),
+              title: Text("Login"),
+              onTap: () {
+                Navigator.pushNamed(context, LOGIN_PAGE);
+              },
+            ),
+          ),
+          Visibility(
+            visible: true,
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                //
+              },
+            ),
+          ),
           ListTile(
-            leading: Icon(Icons.login),
-            title: Text("Login"),
+            leading: Icon(Icons.info),
+            title: Text("About"),
             onTap: () {
-              Navigator.pushNamed(context, LOGIN_PAGE);
+              Navigator.pushNamed(context, ABOUT_PAGE);
             },
           ),
         ],
@@ -212,6 +258,7 @@ class _HomePageState extends State<HomePage> {
       shape: AutomaticNotchedShape(RoundedRectangleBorder(),
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: Container(
+        height: 70,
         margin: EdgeInsets.only(left: 50, right: 50),
         decoration: BoxDecoration(
             shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(30)),
@@ -227,163 +274,161 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             IconButton(
+              icon: Icon(Icons.list_outlined),
+              onPressed: () {
+                print("My Products");
+                Navigator.of(context).pushNamed(PRODUCT_PAGE);
+              },
+            ),
+            IconButton(
               icon: Icon(Icons.message),
               onPressed: () {
-                print("Contact page");
+                print("My Talks");
                 Navigator.of(context).pushNamed(CONTACT_PAGE);
               },
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                print("My Account");
+                Navigator.of(context).pushNamed(LOGIN_PAGE);
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget clipShape() {
+  Widget searchBox() {
     return Stack(
       children: <Widget>[
-        Opacity(
-          opacity: 0.75,
-          child: ClipPath(
-            clipper: CustomShapeClipper(),
-            child: Container(
-              height: _height / 3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Opacity(
-          opacity: 0.5,
-          child: ClipPath(
-            clipper: CustomShapeClipper2(),
-            child: Container(
-              height: _height / 3.5,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Opacity(
-          opacity: 0.25,
-          child: ClipPath(
-            clipper: CustomShapeClipper3(),
-            child: Container(
-              height: _height / 3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
         Container(
-          margin: EdgeInsets.only(left: 40, right: 40, top: _height / 3.75),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
           child: Material(
-            borderRadius: BorderRadius.circular(30.0),
-            elevation: 8,
+            borderRadius: BorderRadius.circular(5.0),
+            elevation: 10,
             child: Container(
               child: TextFormField(
-                cursorColor: Colors.deepPurple[200],
+                cursorColor: Colors.indigo[900],
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
-                  prefixIcon: Icon(Icons.search,
-                      color: Colors.deepPurple[200], size: 30),
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Colors.indigo[900],
+                    size: 30,
+                  ),
                   hintText: "What're you looking for?",
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide.none),
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-                onTap: () {},
-                // onSaved: (String? value) {
-                //   print('Value for field saved as "$value"');
-                // },
+                onFieldSubmitted: (String value) {
+                  print('Value for field saved as "$value"');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchPage(),
+                      // Pass the arguments as part of the RouteSettings. The
+                      // DetailScreen reads the arguments from these settings.
+                      settings: RouteSettings(
+                        arguments: SearchArguments(value),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
         ),
-        Container(
-            //color: Colors.blue,
-            margin: EdgeInsets.only(left: 20, right: 20, top: _height / 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Opacity(
-                  opacity: 0.5,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    child: GestureDetector(
-                        onTap: () {
-                          scaffoldKey.currentState.openDrawer();
-                        },
-                        child: Image.asset(
-                          'assets/images/menubutton.png',
-                          height: _height / 40,
-                        )),
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                    height: _height / 20,
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            print('Editing location');
-                          },
-                          child: Icon(
-                            Icons.edit_location,
-                            color: Colors.white,
-                            size: _height / 40,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                            child: Text('Kathmandu',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: _height / 50),
-                                // overflow: TextOverflow.fade,
-                                softWrap: false)),
-                      ],
-                    ),
-                  ),
-                ),
-                Opacity(
-                  opacity: 0.5,
-                  child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.notifications,
-                        color: Colors.black,
-                        size: _height / 30,
-                      )),
-                ),
-              ],
-            )),
       ],
     );
   }
 
-  Widget expandList() {
+  Widget bannerItems() {
+    return Container(
+        child: Column(
+      children: [
+        CarouselSlider(
+          options: CarouselOptions(
+            autoPlay: true,
+            enlargeCenterPage: false,
+            height: 200,
+            onPageChanged: (index, reason) {
+              setState(
+                () {
+                  _currentIndex = index;
+                },
+              );
+            },
+          ),
+          items: bannerImages
+              .map(
+                (item) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
+                    elevation: 10.0,
+                    shadowColor: Colors.indigoAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(1.0),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(1.0),
+                      ),
+                      child: Stack(
+                        children: <Widget>[
+                          Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                          Center(
+                            child: Text(
+                              '${bannerTitles[_currentIndex]}',
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: bannerImages.map((urlOfItem) {
+            int index = bannerImages.indexOf(urlOfItem);
+            return Container(
+              width: 10.0,
+              height: 10.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _currentIndex == index
+                    ? Color.fromRGBO(0, 0, 0, 0.8)
+                    : Color.fromRGBO(0, 0, 0, 0.3),
+              ),
+            );
+          }).toList(),
+        )
+      ],
+    ));
+  }
+
+  Widget categoryItems() {
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
       child: AnimatedCrossFade(
@@ -400,7 +445,7 @@ class _HomePageState extends State<HomePage> {
                     print('Routing to Electronics item list');
                   },
                   child: Image.asset(
-                    'assets/images/gadget.png',
+                    'assets/images/electronics.png',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -595,7 +640,7 @@ class _HomePageState extends State<HomePage> {
                     print('Routing to Electronics item list');
                   },
                   child: Image.asset(
-                    'assets/images/gadget.png',
+                    'assets/images/electronics.png',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -808,38 +853,58 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget featuredProducts() {
+  Widget productItems() {
+    items = [
+      Product(
+        id: 123,
+        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
+        name: "Lenovo T450",
+        content:
+            "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
+        price: "40000",
+        preview: "assets/images/lenovot450.jpg",
+      ),
+      Product(
+        id: 123,
+        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
+        name: "Asus Laptop",
+        content:
+            "Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
+        price: "20000",
+        preview: "assets/images/laptop.png",
+      ),
+    ];
+
     return Container(
       height: _height / 4.25,
-      //width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         padding: EdgeInsets.all(5),
         shrinkWrap: true,
-        itemCount: featuredItems.length,
+        itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, index) {
-          return _buildFeaturedItems(context, index, featuredItems);
+          return _item(context, index, items);
         },
       ),
     );
   }
 
-  Widget _buildFeaturedItems(
-      BuildContext context, int index, List<Product> listItem) {
+  Widget _item(BuildContext context, int index, List<Product> item) {
+    // print(item);
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(PRODUCT_PAGE);
-        print("Routing to product page");
-      },
       child: CustomCard(
-        title: '${listItem[index].name}',
-        category: '${listItem[index].id}',
-        price: "₹${listItem[index].price}",
-        dateAdded: "${listItem[index].createdAt}",
-        description: "${listItem[index].content}",
-        image: "${listItem[index].preview}",
+        title: '${item[index].name}',
+        category: '${item[index].id}',
+        price: "Rs. ${item[index].price}",
+        dateAdded: "${item[index].createdAt}",
+        description: "${item[index].content}",
+        image: "${item[index].preview}",
         location: "Kathmandu, Nepal",
       ),
+      onTap: () {
+        Navigator.of(context).pushNamed(PRODUCT_PAGE);
+      },
     );
   }
 
@@ -850,11 +915,24 @@ class _HomePageState extends State<HomePage> {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final data = jsonDecode(response.body);
-      print(data);
+      // print(data);
       // return data;
-      return List<Product>.from(data.map((e) => Product.fromJson(e)));
+      return List<Product>.from(data.map((json) => Product.fromJson(json)));
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load products');
     }
   }
 }
+
+final List<String> bannerImages = [
+  'https://cdn.pixabay.com/photo/2014/05/02/21/49/laptop-336373_960_720.jpg',
+  'https://cdn.pixabay.com/photo/2014/08/05/10/27/iphone-410311_960_720.jpg',
+  'https://cdn.pixabay.com/photo/2020/11/01/23/22/breakfast-5705180_1280.jpg',
+  'https://cdn.pixabay.com/photo/2015/06/08/15/18/steering-wheel-801994_960_720.jpg',
+];
+final List<String> bannerTitles = [
+  'Laptops',
+  'Mobiles',
+  'Food & Drinks',
+  'Automobiles',
+];

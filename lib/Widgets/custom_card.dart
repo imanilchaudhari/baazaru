@@ -26,7 +26,7 @@ class CustomCard extends StatelessWidget {
     _height = MediaQuery.of(context).size.height;
     return Card(
       elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1.0)),
       color: Colors.white,
       child: Container(
         padding: EdgeInsets.only(left: 10, top: 10, right: 5, bottom: 10),
@@ -140,10 +140,10 @@ class CustomCard extends StatelessWidget {
               width: _width / 2.5,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.orange[50],
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.indigo[50],
+                borderRadius: BorderRadius.circular(1.0),
               ),
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
               child: Image.asset(
                 image,
                 fit: BoxFit.cover,

@@ -12,7 +12,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Category Page"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.indigo,
       ),
       body: Text('loading'),
     );

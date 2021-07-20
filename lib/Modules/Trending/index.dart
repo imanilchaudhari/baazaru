@@ -19,7 +19,7 @@ class _TrendingPageState extends State<TrendingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Trending Products"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.indigo,
       ),
       body: list.productList == null
           ? Text('loading')

@@ -7,6 +7,7 @@ const HOME_PAGE = "home";
 const SPLASH_PAGE = "index";
 const WELCOME_PAGE = "welcome";
 const CONTACT_PAGE = "contact";
+const ABOUT_PAGE = "about";
 
 const LOGIN_PAGE = "login";
 const SIGNUP_PAGE = "register";

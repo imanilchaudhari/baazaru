@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: true,
           title: 'Welcome to Baazaru',
-          theme: ThemeData(primaryColor: Colors.orange[200]),
+          theme: ThemeData(primaryColor: Colors.indigo[900]),
           routes: <String, WidgetBuilder>{
             SPLASH_PAGE: (BuildContext context) => SplashPage(),
             HOME_PAGE: (BuildContext context) => HomePage(),

@@ -12,7 +12,7 @@ class _CommentPageState extends State<CommentPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Comment Page"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.indigo,
       ),
       body: Text('loading'),
     );

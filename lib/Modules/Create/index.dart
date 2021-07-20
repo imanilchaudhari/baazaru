@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:baazaru/Models/product.dart';
 import 'package:baazaru/Providers/product.dart';
 
-class ProductPage extends StatefulWidget {
-  ProductPage({Key key}) : super(key: key);
+class CreatePage extends StatefulWidget {
+  CreatePage({Key key}) : super(key: key);
   @override
-  ProductlPageState createState() => ProductlPageState();
+  _CreatePageState createState() => _CreatePageState();
 }
 
-class ProductlPageState extends State<ProductPage> {
+class _CreatePageState extends State<CreatePage> {
   @override
   Widget build(BuildContext context) {
     final list = Provider.of<ProductProvider>(context);
@@ -17,10 +18,13 @@ class ProductlPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Products"),
+        title: Text("Create Products"),
         backgroundColor: Colors.indigo,
       ),
-      body: Text('loading'),
+      body: Text(
+        'Loading ...',
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

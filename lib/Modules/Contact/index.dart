@@ -20,14 +20,14 @@ class _ContactPageState extends State<ContactPage> {
       drawer: _sidebarWidget(),
       appBar: AppBar(
         title: Text("Contact Page"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.indigo,
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 3,
         onPressed: () {
           Navigator.pushNamed(context, CREATE_PAGE);
         },
-        backgroundColor: Colors.deepPurple[200],
+        backgroundColor: Colors.indigo[900],
         icon: Icon(Icons.add),
         label: Text(
           "List An Ads",
@@ -54,7 +54,7 @@ class _ContactPageState extends State<ContactPage> {
               padding: EdgeInsets.only(top: _height / 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.deepPurple[200], Colors.deepPurpleAccent],
+                  colors: [Colors.indigo[900], Colors.indigoAccent],
                 ),
               ),
               child: ListTile(
