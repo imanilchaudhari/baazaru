@@ -3,11 +3,11 @@ import 'package:baazaru/cons.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
-  final Function press;
+  final void Function() press;
   const AlreadyHaveAnAccountCheck({
-    Key key,
+    Key? key,
     this.login = true,
-    this.press,
+    required this.press,
   }) : super(key: key);
 
   @override

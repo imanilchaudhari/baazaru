@@ -4,11 +4,11 @@ import 'package:baazaru/cons.dart';
 
 class SocalIcon extends StatelessWidget {
   final String iconSrc;
-  final Function press;
+  final void Function() press;
   const SocalIcon({
-    Key key,
-    this.iconSrc,
-    this.press,
+    Key? key,
+    required this.iconSrc,
+    required this.press,
   }) : super(key: key);
 
   @override
