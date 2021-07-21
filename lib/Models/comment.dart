@@ -7,12 +7,12 @@ class Comment {
   final String content;
 
   Comment({
-    this.id,
-    this.pid,
-    this.parent,
-    this.author,
-    this.email,
-    this.content,
+    required this.id,
+    required this.pid,
+    required this.parent,
+    required this.author,
+    required this.email,
+    required this.content,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {

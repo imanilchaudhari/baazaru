@@ -7,12 +7,12 @@ class Category {
   final String image;
 
   Category({
-    this.id,
-    this.pid,
-    this.name,
-    this.slug,
-    this.icon,
-    this.image,
+    required this.id,
+    required this.pid,
+    required this.name,
+    required this.slug,
+    required this.icon,
+    required this.image,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
@@ -27,7 +27,7 @@ class Category {
   }
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'slug': slug,
-  };
+        'name': name,
+        'slug': slug,
+      };
 }

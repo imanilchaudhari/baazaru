@@ -4,12 +4,17 @@ class User {
   static const colEmail = 'email';
   static const colPassword = 'password';
 
-  User({this.id, this.name, this.email, this.password});
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.password,
+  });
 
-  int id;
-  String name;
-  String email;
-  String password;
+  late int id;
+  late String name;
+  late String email;
+  late String password;
 
   User.fromMap(Map<String, dynamic> map) {
     id = map[colId];
@@ -27,5 +32,4 @@ class User {
     if (id != null) map[colId] = id;
     return map;
   }
-
 }
