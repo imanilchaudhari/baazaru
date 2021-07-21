@@ -3,12 +3,12 @@ import 'package:baazaru/Models/user.dart';
 import 'package:baazaru/Services/user.dart';
 
 class UserProvider extends ChangeNotifier {
-  List<User> _users;
+  late List<User> _items;
 
-  List<User> get productList => _users;
+  List<User> get productList => _items;
 
   set productList(List<User> newList) {
-    _users = newList;
+    _items = newList;
     notifyListeners();
   }
 

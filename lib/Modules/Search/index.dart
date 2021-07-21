@@ -4,10 +4,21 @@ import 'package:baazaru/Classes/search.dart';
 import 'package:baazaru/Models/product.dart';
 import 'package:baazaru/Providers/product.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  SearchPage({Key? key}) : super(key: key);
+  @override
+  SearchPageState createState() => SearchPageState();
+}
+
+class SearchPageState extends State<SearchPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as SearchArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as SearchArguments;
     return Scaffold(
       appBar: AppBar(
         title: Text("Search Products"),

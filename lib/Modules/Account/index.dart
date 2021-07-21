@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CommentPage extends StatefulWidget {
-  CommentPage({Key? key}) : super(key: key);
+class AccountPage extends StatefulWidget {
+  AccountPage({Key? key}) : super(key: key);
   @override
-  _CommentPageState createState() => _CommentPageState();
+  _AccountPageState createState() => _AccountPageState();
 }
 
-class _CommentPageState extends State<CommentPage> {
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Comment Page"),
+        title: Text("Account Page"),
         backgroundColor: Colors.indigo,
       ),
       body: Text('loading'),

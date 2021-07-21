@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:baazaru/Modules/Search/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -7,13 +6,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:baazaru/conf.dart';
 import 'package:baazaru/cons.dart';
+import 'package:baazaru/Classes/category.dart';
+import 'package:baazaru/Classes/product.dart';
 import 'package:baazaru/Classes/search.dart';
 import 'package:baazaru/Models/product.dart';
+import 'package:baazaru/Modules/Category/index.dart';
+import 'package:baazaru/Modules/Product/index.dart';
+import 'package:baazaru/Modules/Search/index.dart';
 import 'package:baazaru/Services/product.dart';
 import 'package:baazaru/Widgets/custom_card.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -23,11 +27,11 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   bool isExpanded = false;
-  double _height;
-  double _width;
+  late double _height;
+  late double _width;
 
-  List<Product> items;
-  Future<List<Product>> products;
+  late List<Product> items;
+  late Future<List<Product>> products;
 
   @override
   void initState() {
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         ),
         leading: GestureDetector(
           onTap: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
           child: Icon(
             Icons.menu, // add custom icons also
@@ -269,29 +273,25 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                print("Home page");
                 Navigator.of(context).pushNamed(HOME_PAGE);
               },
             ),
             IconButton(
               icon: Icon(Icons.list_outlined),
               onPressed: () {
-                print("My Products");
                 Navigator.of(context).pushNamed(PRODUCT_PAGE);
               },
             ),
             IconButton(
               icon: Icon(Icons.message),
               onPressed: () {
-                print("My Talks");
                 Navigator.of(context).pushNamed(CONTACT_PAGE);
               },
             ),
             IconButton(
               icon: Icon(Icons.person),
               onPressed: () {
-                print("My Account");
-                Navigator.of(context).pushNamed(LOGIN_PAGE);
+                Navigator.of(context).pushNamed(ACCOUNT_PAGE);
               },
             ),
           ],
@@ -441,11 +441,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(ELECTRONICS_ITEM_LIST);
-                    print('Routing to Electronics item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_ELEX),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/electronics.png',
+                    'assets/images/electronics.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -465,11 +472,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(PROPERTIES_ITEM_LIST);
-                      print('Routing to Properties item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_RSTT),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/house.png',
+                      'assets/images/home.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -488,11 +502,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(JOBS_ITEM_LIST);
-                      print('Routing to Jobs item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_ACCE),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/job.png',
+                      'assets/images/camera.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -501,7 +522,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Jobs",
+                    "Accessories	",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -511,11 +532,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(FURNITURE_ITEM_LIST);
-                      print('Routing to Furniture item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_AUTO),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/sofa.png',
+                      'assets/images/car.png',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -524,7 +552,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Furniture",
+                    "Automotive",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -534,11 +562,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(CARS_ITEM_LIST);
-                    print('Routing to Cars item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_BEAU),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/car.png',
+                    'assets/images/health.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -548,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Cars",
+                    "Health",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -558,11 +593,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(BIKES_ITEM_LIST);
-                    print('Routing to Bikes item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_COMP),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/bike.png',
+                    'assets/images/computer.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -572,7 +614,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Bikes",
+                    "Computer",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -582,44 +624,58 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(MOBILES_ITEM_LIST);
-                      print('Routing to Mobiles item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_PETS),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/smartphone.png',
+                      'assets/images/pet.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
-                SizedBox(
-                  height: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    "Mobiles",
-                    style: TextStyle(fontSize: 13),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    //Navigator.of(context).pushNamed(PETS_ITEM_LIST);
-                    print('Routing to Pets item list');
-                  },
-                  child: Image.asset(
-                    'assets/images/pet.png',
-                    height: _height / 12,
-                    width: _width / 12,
-                  ),
-                ),
                 SizedBox(
                   height: 5,
                 ),
                 Flexible(
                   child: Text(
                     "Pets",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_ENTE),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/music.jpg',
+                    height: _height / 12,
+                    width: _width / 12,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Flexible(
+                  child: Text(
+                    "Entertainment",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -636,11 +692,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(CATEGORY_PAGE);
-                    print('Routing to Electronics item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_ELEX),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/electronics.png',
+                    'assets/images/electronics.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -660,11 +723,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(PROPERTIES_ITEM_LIST);
-                      print('Routing to Properties item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_RSTT),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/house.png',
+                      'assets/images/home.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -683,11 +753,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(JOBS_ITEM_LIST);
-                      print('Routing to Jobs item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_ACCE),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/job.png',
+                      'assets/images/camera.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -696,7 +773,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Jobs",
+                    "Accessories	",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -706,11 +783,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(FURNITURE_ITEM_LIST);
-                      print('Routing to Furniture item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_AUTO),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/sofa.png',
+                      'assets/images/car.png',
                       height: _height / 12,
                       width: _width / 12,
                     )),
@@ -719,7 +803,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Furniture",
+                    "Automotive",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -729,11 +813,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(CARS_ITEM_LIST);
-                    print('Routing to Cars item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_BEAU),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/car.png',
+                    'assets/images/health.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -743,7 +834,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Cars",
+                    "Health",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -753,11 +844,18 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(BIKES_ITEM_LIST);
-                    print('Routing to Bikes item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_COMP),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
-                    'assets/images/bike.png',
+                    'assets/images/computer.jpg',
                     height: _height / 12,
                     width: _width / 12,
                   ),
@@ -767,7 +865,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: Text(
-                    "Bikes",
+                    "Computer",
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -777,38 +875,21 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      //Navigator.of(context).pushNamed(MOBILES_ITEM_LIST);
-                      print('Routing to Mobiles item list');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                          settings: RouteSettings(
+                            arguments: CategoryArguments(CATEGORY_PETS),
+                          ),
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      'assets/images/smartphone.png',
+                      'assets/images/pet.jpg',
                       height: _height / 12,
                       width: _width / 12,
                     )),
-                SizedBox(
-                  height: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    "Mobiles",
-                    style: TextStyle(fontSize: 13),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    //Navigator.of(context).pushNamed(PETS_ITEM_LIST);
-                    print('Routing to Pets item list');
-                  },
-                  child: Image.asset(
-                    'assets/images/pet.png',
-                    height: _height / 12,
-                    width: _width / 12,
-                  ),
-                ),
                 SizedBox(
                   height: 5,
                 ),
@@ -824,8 +905,46 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    //Navigator.of(context).pushNamed(FASHION_ITEM_LIST);
-                    print('Routing to Fashion item list');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_ENTE),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/music.jpg',
+                    height: _height / 12,
+                    width: _width / 12,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Flexible(
+                  child: Text(
+                    "Entertainment",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_FASH),
+                        ),
+                      ),
+                    );
                   },
                   child: Image.asset(
                     'assets/images/dress.png',
@@ -844,6 +963,37 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
+            Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryPage(),
+                        settings: RouteSettings(
+                          arguments: CategoryArguments(CATEGORY_JOBS),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/job.png',
+                    height: _height / 12,
+                    width: _width / 12,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Flexible(
+                  child: Text(
+                    "Jobs",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         crossFadeState:
@@ -856,22 +1006,20 @@ class _HomePageState extends State<HomePage> {
   Widget productItems() {
     items = [
       Product(
-        id: 123,
-        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
-        name: "Lenovo T450",
-        content:
-            "Discover the Lenovo ThinkPad T450, a 14-inch thin and light business Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
-        price: "40000",
-        preview: "assets/images/lenovot450.jpg",
+        id: 1,
+        name: "iphone 6 (white cover)",
+        content: "We are happy to introduce you our fabulous GLOSSY WHITE skin",
+        price: "25000",
+        preview: "https://baazaru.com/uploads/2021/04/iphone-6.jpg",
+        location: 'Kathmandu, Nepal',
       ),
       Product(
-        id: 123,
-        createdAt: DateTime(2019, 10, 10, 10, 10, 10),
-        name: "Asus Laptop",
-        content:
-            "Ultrabook with the newest Intel Core i processor, backlit keyboard and up to 17 hours battery backup.",
-        price: "20000",
-        preview: "assets/images/laptop.png",
+        id: 2,
+        name: "Futsal Shoe",
+        content: "",
+        price: "1500",
+        preview: "https://baazaru.com/uploads/2021/07/futsal-shoes.jpg",
+        location: 'Lagankhel, Lalitpur',
       ),
     ];
 
@@ -897,13 +1045,23 @@ class _HomePageState extends State<HomePage> {
         title: '${item[index].name}',
         category: '${item[index].id}',
         price: "Rs. ${item[index].price}",
-        dateAdded: "${item[index].createdAt}",
         description: "${item[index].content}",
         image: "${item[index].preview}",
-        location: "Kathmandu, Nepal",
+        location: "${item[index].location}",
       ),
       onTap: () {
-        Navigator.of(context).pushNamed(PRODUCT_PAGE);
+        // Navigator.of(context).pushNamed(PRODUCT_PAGE);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductPage(),
+            // Pass the arguments as part of the RouteSettings. The
+            // DetailScreen reads the arguments from these settings.
+            settings: RouteSettings(
+              arguments: ProductArguments(item[index].id, item[index].name),
+            ),
+          ),
+        );
       },
     );
   }

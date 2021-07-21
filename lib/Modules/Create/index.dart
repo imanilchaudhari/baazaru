@@ -5,7 +5,7 @@ import 'package:baazaru/Models/product.dart';
 import 'package:baazaru/Providers/product.dart';
 
 class CreatePage extends StatefulWidget {
-  CreatePage({Key key}) : super(key: key);
+  CreatePage({Key? key}) : super(key: key);
   @override
   _CreatePageState createState() => _CreatePageState();
 }

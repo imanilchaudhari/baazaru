@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:baazaru/cons.dart';
 
 class ContactPage extends StatefulWidget {
-  ContactPage({Key key}) : super(key: key);
+  ContactPage({Key? key}) : super(key: key);
   @override
   _ContactPageState createState() => _ContactPageState();
 }
 
 class _ContactPageState extends State<ContactPage> {
-  double _height;
-  double _width;
+  late double _height;
+  late double _width;
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -54,7 +54,7 @@ class _ContactPageState extends State<ContactPage> {
               padding: EdgeInsets.only(top: _height / 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.indigo[900], Colors.indigoAccent],
+                  colors: [Colors.indigo, Colors.indigoAccent],
                 ),
               ),
               child: ListTile(
@@ -114,14 +114,12 @@ class _ContactPageState extends State<ContactPage> {
             IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                print("Home page");
                 Navigator.of(context).pushNamed(HOME_PAGE);
               },
             ),
             IconButton(
               icon: Icon(Icons.message),
               onPressed: () {
-                print("Contact page");
                 Navigator.of(context).pushNamed(CONTACT_PAGE);
               },
             )

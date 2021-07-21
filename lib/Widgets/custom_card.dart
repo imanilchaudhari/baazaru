@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomCard extends StatelessWidget {
-  double _width;
-  double _height;
-  String title;
-  String price;
-  String dateAdded;
-  String category;
-  String description;
-  String image;
-  String location;
+  late double _width;
+  late double _height;
+  late String title;
+  late String price;
+  late String dateAdded;
+  late String category;
+  late String description;
+  late String image;
+  late String location;
 
-  CustomCard(
-      {this.title,
-      this.price,
-      this.dateAdded,
-      this.category,
-      this.description,
-      this.image,
-      this.location});
+  CustomCard({
+    required this.title,
+    required this.price,
+    // required this.dateAdded,
+    required this.category,
+    required this.description,
+    required this.image,
+    required this.location,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +146,7 @@ class CustomCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(1.0),
               ),
               padding: EdgeInsets.all(5),
-              child: Image.asset(
+              child: Image.network(
                 image,
                 fit: BoxFit.cover,
                 height: _height / 4,

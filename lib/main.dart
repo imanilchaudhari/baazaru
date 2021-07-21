@@ -18,6 +18,7 @@ import 'package:baazaru/Modules/Product/index.dart';
 import 'package:baazaru/Modules/Contact/index.dart';
 import 'package:baazaru/Modules/Create/index.dart';
 import 'package:baazaru/Modules/Comment/index.dart';
+import 'package:baazaru/Modules/Account/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
             PRODUCT_PAGE: (BuildContext context) => ProductPage(),
             CREATE_PAGE: (BuildContext context) => CreatePage(),
             COMMENT_PAGE: (BuildContext context) => CommentPage(),
+            ACCOUNT_PAGE: (BuildContext context) => AccountPage(),
           },
           initialRoute: HOME_PAGE,
         ));

@@ -5,7 +5,7 @@ import 'package:baazaru/Models/product.dart';
 import 'package:baazaru/Providers/product.dart';
 
 class TrendingPage extends StatefulWidget {
-  TrendingPage({Key key}) : super(key: key);
+  TrendingPage({Key? key}) : super(key: key);
   @override
   _TrendingPageState createState() => _TrendingPageState();
 }
@@ -35,7 +35,6 @@ class _TrendingPageState extends State<TrendingPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(product.id.toString()),
-                      Text(product.createdAt.toString())
                     ],
                   ),
                   trailing: IconButton(
